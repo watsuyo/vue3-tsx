@@ -1,13 +1,26 @@
-import Vue, { VNode } from "vue";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import Vue, { VNode  } from 'vue'
+
+declare module '@vue/composition-api' {
+  interface SetupContext {
+    readonly refs: { [key: string]: Vue | Element | Vue[] | Element[] }
+  }
+}
 
 declare global {
   namespace JSX {
-    // tslint:disable no-empty-interface
-    interface Element extends VNode {}
-    // tslint:disable no-empty-interface
-    interface ElementClass extends Vue {}
+
+    // Common attributes of all components (including custom components)
+    interface IntrinsicAttributes {
+      [attribute: string]: any
+    }
+
     interface IntrinsicElements {
-      [elem: string]: any;
+      [element: string]: any
+    }
+    // Read "$props" field in the custom components return type as property of the components
+    interface ElementAttributesProperty {
+      $props: any
     }
   }
 }
